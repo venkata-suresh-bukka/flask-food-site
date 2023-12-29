@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel= "stylesheet" href="{{ url_for('static', filename='css/order_details.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order List</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous" />
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/20c5629a29.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/FoodSite.css') }}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    	<nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top mb-5">
+	        <div class="container">
+	            <a class="navbar-brand" href="#">
+	                <img src="https://d1tgh8fmlzexmh.cloudfront.net/ccbp-responsive-website/food-munch-img.png" class="food-munch-logo" />
+	            </a>
+	            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+	                <span class="navbar-toggler-icon"></span>
+	            </button>
+	            <div class="collapse navbar-collapse mr-4" id="navbarNavAltMarkup">
+	                <div class="navbar-nav ml-auto">
+	                    <a class="nav-link font-weight-bold mr-3" href="{{ url_for('home') }}" id="navItem3">Home</a>
+	                </div>
+	            </div>
+	        </div>
+    </nav> 
+    <div class="table-container">
+        <div class="">
+            <h2 class="order-list-text pt-3 pb-3">Order List</h2>
+            <table>
+                <thead>
+                    <tr class="border-bottom p-3">
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone Number</th>
+                        <th>Quantity</th>
+                        <th>Item Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for order in orders %}
+                    <tr class="border-bottom pl-3">
+                        <td>{{ order.name }}</td>
+                        <td>{{ order.email }}</td>
+                        <td>{{ order.phone_number }}</td>
+                        <td>{{ order.quantity }}</td>
+                        <td>{{ order.item_name }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- Pagination controls -->
+        <div class="pagination-container">
+            <ul class="pagination">
+                {% if page > 1 %}
+                <li class="page-item">
+                    <a class="page-link" href="{{ url_for('orders', page=page-1) }}">Previous</a>
+                </li>
+                {% endif %}
+                {% for num in range(1, total_pages+1) %}
+                <li class="page-item {% if num == page %}active{% endif %}">
+                    <a class="page-link" href="{{ url_for('orders', page=num) }}">{{ num }}</a>
+                </li>
+                {% endfor %}
+                {% if page < total_pages %}
+                <li class="page-item">
+                    <a class="page-link" href="{{ url_for('orders', page=page+1) }}">Next</a>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+    
+</body>
+</html>
