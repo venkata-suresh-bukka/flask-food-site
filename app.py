@@ -9,10 +9,10 @@ app.secret_key = os.urandom(24)
 
 # Establish MySQL database connection
 conn = mysql.connector.connect(
-    host='34.136.39.89',
-    user='root',
-    password='admin123',
-    database='books'
+    host='34.31.13.113',
+    user='venkat',
+    password='101251',
+    database='food-site'
 )
 print("Connected to MySQL database successfully")
 
