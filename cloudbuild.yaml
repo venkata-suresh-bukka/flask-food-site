@@ -1,0 +1,19 @@
+steps:
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'venkatrobin/food-app:v1', '.']
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'venkatrobin/food-app:v1 ']
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: 'gcloud'
+    args:
+      - 'run'  # Use the 'run' command to deploy to Cloud Run
+      - 'deploy'  # Deploy a new revision
+      - 'food-site-service'  # Replace with your Cloud Run service name
+      - '--image=venkatrobin/food-app:v1'  # Image URL
+      - '--platform=managed'
+      - '--region=us-central1'  # Replace with your desired region
+      - '--port=5000'  # Set the port to 5000
+      - '--allow-unauthenticated'  # Allow unauthenticated invocations
+
+options:
+  logging: CLOUD_LOGGING_ONLY
