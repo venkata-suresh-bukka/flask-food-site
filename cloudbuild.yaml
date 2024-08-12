@@ -20,7 +20,7 @@ steps:
 
 availableSecrets:
   secretManager:
-    - versionName: projects/peaceful-choir-427805-s9t/secrets/docker-hub-pwd/versions/latest
+    - versionName: projects/peaceful-choir-427805/secrets/docker-hub-pwd/versions/latest
       env: 'DOCKER_PASSWORD'
 
 options:
