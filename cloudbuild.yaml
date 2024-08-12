@@ -1,19 +1,27 @@
 steps:
   - name: 'docker'
     args: ['build', '-t', 'venkatrobin/food-app:v1', '.']
+
   - name: 'docker'
     args: ['push', 'venkatrobin/food-app:v1']
+
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: 'gcloud'
     args:
-      - 'run'  # Use the 'run' command to deploy to Cloud Run
-      - 'deploy'  # Deploy a new revision
-      - 'food-site-service'  # Replace with your Cloud Run service name
-      - '--image=venkatrobin/food-app:v1'  # Image URL from Docker Hub
+      - 'run'
+      - 'deploy'
+      - 'food-site-service'
+      - '--image=venkatrobin/food-app:v1'
       - '--platform=managed'
-      - '--region=us-central1'  # Replace with your desired region
-      - '--port=5000'  # Set the port to 5000
-      - '--allow-unauthenticated'  # Allow unauthenticated invocations
+      - '--region=us-central1'
+      - '--port=5000'
+      - '--allow-unauthenticated'
+      - '--set-env-vars=DOCKER_USERNAME=venkatrobin,DOCKER_PASSWORD=$(DOCKER_PASSWORD)'
+
+availableSecrets:
+  secretManager:
+    - versionName: projects/peaceful-choir-427805-s9t/secrets/docker-hub-pwd/versions/latest
+      env: 'DOCKER_PASSWORD'
 
 options:
   logging: CLOUD_LOGGING_ONLY
