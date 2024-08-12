@@ -7,7 +7,7 @@ steps:
     args:
       - '-c'
       - |
-        echo $DOCKER_PASSWORD | docker login -u venkatrobin --password-stdin
+        echo "$$DOCKER_PASSWORD" | docker login -u venkatrobin --password-stdin
         docker push venkatrobin/food-app:v1
 
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
