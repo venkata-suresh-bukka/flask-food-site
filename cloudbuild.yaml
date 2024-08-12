@@ -3,7 +3,12 @@ steps:
     args: ['build', '-t', 'venkatrobin/food-app:v1', '.']
 
   - name: 'docker'
-    args: ['push', 'venkatrobin/food-app:v1']
+    entrypoint: 'sh'
+    args:
+      - '-c'
+      - |
+        echo $DOCKER_PASSWORD | docker login -u venkatrobin --password-stdin
+        docker push venkatrobin/food-app:v1
 
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: 'gcloud'
@@ -16,7 +21,6 @@ steps:
       - '--region=us-central1'
       - '--port=5000'
       - '--allow-unauthenticated'
-      - '--set-env-vars=DOCKER_USERNAME=venkatrobin,DOCKER_PASSWORD=$(DOCKER_PASSWORD)'
 
 availableSecrets:
   secretManager:
