@@ -29,3 +29,6 @@ steps:
 
 images:
   - 'REGION-docker.pkg.dev/$PROJECT_ID/ARTIFACT_REPO/$REPO_NAME:$COMMIT_SHA'
+
+options:
+  logging: CLOUD_LOGGING_ONLY
