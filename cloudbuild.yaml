@@ -1,41 +1,36 @@
 steps:
+  # Step 1: Build and tag the Docker image
   - name: 'gcr.io/cloud-builders/docker'
     args:
       - build
       - '-t'
-      - '$_REGION-docker.pkg.dev/$PROJECT_ID/$_ARTIFACT_REPO/$REPO_NAME:$COMMIT_SHA'
+      - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_ARTIFACT_REPO}/${_IMAGE_NAME}:${COMMIT_SHA}'
       - '.'
-    env:
-      - 'MYSQL_HOST=$_MYSQL_HOST'
-      - 'MYSQL_USER=$_MYSQL_USER'
-      - 'MYSQL_PASSWORD=$_MYSQL_PASSWORD'
-      - 'MYSQL_DB=$_MYSQL_DB'
 
+  # Step 2: Push the Docker image to Artifact Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - push
+      - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_ARTIFACT_REPO}/${_IMAGE_NAME}:${COMMIT_SHA}'
+
+  # Step 3: Deploy to Cloud Run with secrets
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: 'gcloud'
     args:
       - run
       - deploy
-      - $_CLOUD_RUN_SERVICE
-      - --image
-      - '$_REGION-docker.pkg.dev/$PROJECT_ID/$_ARTIFACT_REPO/$REPO_NAME:$COMMIT_SHA'
-      - --region
-      - $_REGION
-      - --platform
-      - managed
+      - ${_CLOUD_RUN_SERVICE}
+      - --image=${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_ARTIFACT_REPO}/${_IMAGE_NAME}:${COMMIT_SHA}
+      - --platform=managed
+      - --region=${_REGION}
       - --allow-unauthenticated
-      - --set-env-vars
-      - 'MYSQL_HOST=$_MYSQL_HOST,MYSQL_USER=$_MYSQL_USER,MYSQL_PASSWORD=$_MYSQL_PASSWORD,MYSQL_DB=$_MYSQL_DB'
+      - --set-secrets=db_host=db_host:latest,db_password=db_password:latest,solid_sa=solid_sa:latest
 
 substitutions:
-  _MYSQL_HOST: ''
-  _MYSQL_USER: ''
-  _MYSQL_PASSWORD: ''
-  _MYSQL_DB: ''
-  _CLOUD_RUN_SERVICE: ''
-  _REGION: ''
-  _ARTIFACT_REPO: ''
-
+  _REGION: us-central1
+  _ARTIFACT_REPO: flask-repo
+  _IMAGE_NAME: flask-food-site
+  _CLOUD_RUN_SERVICE: flask-app
 
 options:
   logging: CLOUD_LOGGING_ONLY
