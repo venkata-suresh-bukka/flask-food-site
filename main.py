@@ -9,7 +9,7 @@ app.secret_key = os.urandom(24)
 
 # Establish MySQL database connection
 conn = mysql.connector.connect(
-    host='34.136.39.89',
+    host='',
     user='root',
     password='admin123',
     database='books'

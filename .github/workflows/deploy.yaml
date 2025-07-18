@@ -1,0 +1,33 @@
+name: Deploy to Cloud Run
+
+on:
+  push:
+    branches: [ dev ]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Cloud SDK
+      uses: google-github-actions/setup-gcloud@v1
+      with:
+        service_account_key: ${{ secrets.GCP_SERVICE_KEY }}
+        project_id: ${{ secrets.GCP_PROJECT_ID }}
+        export_default_credentials: true
+
+    - name: Build & Deploy with Cloud Build
+      uses: google-github-actions/cloud-build@v0
+      with:
+        config: cloudbuild.yaml
+      env:
+        _MYSQL_HOST: ${{ secrets.MYSQL_HOST }}
+        _MYSQL_USER: ${{ secrets.MYSQL_USER }}
+        _MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
+        _MYSQL_DB: ${{ secrets.MYSQL_DB }}
+        CLOUD_RUN_SERVICE: ${{ secrets.CLOUD_RUN_SERVICE }}
+        REGION: ${{ secrets.REGION }}
+        ARTIFACT_REPO: ${{ secrets.ARTIFACT_REPO }}
