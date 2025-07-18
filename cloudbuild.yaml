@@ -28,7 +28,7 @@ steps:
 
 substitutions:
   _REGION: us-central1
-  _ARTIFACT_REPO: flask-repo
+  _ARTIFACT_REPO: flask-app-repo
   _IMAGE_NAME: flask-food-site
   _CLOUD_RUN_SERVICE: flask-app
 
