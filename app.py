@@ -15,13 +15,15 @@ app.secret_key = os.urandom(24)
 #     database="food-site"
 # )
 
-unix_socket = '/cloudsql/{}'.format(os.environ.get("flask"))
+instance_connection_name = os.environ.get("INSTANCE_CONNECTION_NAME")
+if not instance_connection_name:
+    raise RuntimeError("Missing INSTANCE_CONNECTION_NAME env variable")
 
 conn = mysql.connector.connect(
     user='venkat',
     password=os.environ.get("DB_PASSWORD"),
     database='food-site',
-    unix_socket=unix_socket
+    unix_socket=f'/cloudsql/{instance_connection_name}'
 )
 
 # conn = mysql.connector.connect(
