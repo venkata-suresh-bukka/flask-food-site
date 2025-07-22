@@ -8,12 +8,17 @@ app = Flask(__name__)
 app.secret_key = os.urandom(24)  
 
 # Establish MySQL database connection deploy
+def read_secret(path):
+    with open(path, "r") as f:
+        return f.read().strip()
+
 conn = mysql.connector.connect(
-    host=os.environ.get("MYSQL_HOST"),
+    host=read_secret("/secrets/db_host"),
     user="venkat",
-    password=os.environ.get("MYSQL_PASSWORD"),
+    password=read_secret("/secrets/db_password"),
     database="food-site"
 )
+
 
 # conn = mysql.connector.connect(
 #     host="34.100.186.129",
