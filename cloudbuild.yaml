@@ -37,7 +37,7 @@ substitutions:
   _ARTIFACT_REPO: flask-app-repo
   _IMAGE_NAME: flask-food-site
   _CLOUD_RUN_SERVICE: flask-app
-  _SQL_INSTANCE_CONNECTION_NAME: solid-alignment-466215-b7:us-central1:food-site-db
+  _SQL_INSTANCE_CONNECTION_NAME: solid-alignment-466215-b7:asia-south1:food-site-db
   _VPC_CONNECTOR: flask
 
 options:
