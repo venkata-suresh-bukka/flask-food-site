@@ -16,9 +16,9 @@ conn = mysql.connector.connect(
 )
 
 # conn = mysql.connector.connect(
-#     host="",
+#     host="34.100.186.129",
 #     user="venkat",
-#     password="",
+#     password="Venkat",
 #     database="food-site"
 # )
 print("Connected to MySQL database successfully")
