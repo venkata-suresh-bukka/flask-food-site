@@ -14,6 +14,13 @@ conn = mysql.connector.connect(
     password=os.environ.get("MYSQL_PASSWORD"),
     database="food-site"
 )
+
+# conn = mysql.connector.connect(
+#     host="",
+#     user="venkat",
+#     password="",
+#     database="food-site"
+# )
 print("Connected to MySQL database successfully")
 
 
