@@ -8,19 +8,19 @@ app = Flask(__name__)
 app.secret_key = os.urandom(24)  
 
 # Establish MySQL database connection deploy
-conn = mysql.connector.connect(
-    host=os.environ.get("MYSQL_HOST"),
-    user="venkat",
-    password=os.environ.get("MYSQL_PASSWORD"),
-    database="food-site"
-)
-
 # conn = mysql.connector.connect(
-#     host="34.100.186.129",
+#     host=os.environ.get("MYSQL_HOST"),
 #     user="venkat",
-#     password="Venkat",
+#     password=os.environ.get("MYSQL_PASSWORD"),
 #     database="food-site"
 # )
+
+conn = mysql.connector.connect(
+    host="34.100.186.129",
+    user="venkat",
+    password="Venkat",
+    database="food-site"
+)
 print("Connected to MySQL database successfully")
 
 
