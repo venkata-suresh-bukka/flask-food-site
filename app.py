@@ -15,12 +15,15 @@ app.secret_key = os.urandom(24)
 #     database="food-site"
 # )
 
+unix_socket = '/cloudsql/{}'.format(os.environ.get("flask"))
+
 conn = mysql.connector.connect(
     user='venkat',
     password=os.environ.get("DB_PASSWORD"),
     database='food-site',
-    unix_socket='/cloudsql/{}'.format(os.environ.get("food-site-db"))
+    unix_socket=unix_socket
 )
+
 # conn = mysql.connector.connect(
 #     host="34.100.186.129",
 #     user="venkat",
