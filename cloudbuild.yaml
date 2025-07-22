@@ -25,7 +25,7 @@ steps:
       - --region=${_REGION}
       - --port=5000
       - --allow-unauthenticated
-      - --set-secrets=solid-sa=solid-sa:latest
+      - --set-secrets=db_host=db_host:latest,db_password=db_password:latest,solid-sa=solid-sa:latest
       - --service-account=venkat-cloud@${PROJECT_ID}.iam.gserviceaccount.com
 
 substitutions:
