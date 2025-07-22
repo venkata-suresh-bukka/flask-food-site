@@ -7,7 +7,7 @@ from flask import jsonify
 app = Flask(__name__)
 app.secret_key = os.urandom(24)  
 
-# Establish MySQL database connection
+# Establish MySQL database connection deploy
 conn = mysql.connector.connect(
     host=os.environ.get("MYSQL_HOST"),
     user="venkat",
