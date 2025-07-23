@@ -15,7 +15,7 @@ app.secret_key = os.urandom(24)
 #     database="food-site"
 # )
 
-instance_connection_name = os.environ.get("INSTANCE_CONNECTION_NAME")
+instance_connection_name = "solid-alignment-466215-b7:asia-south1:food-site-db"
 if not instance_connection_name:
     raise RuntimeError("Missing INSTANCE_CONNECTION_NAME env variable")
 
