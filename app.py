@@ -26,6 +26,9 @@ conn = mysql.connector.connect(
     unix_socket=f'/cloudsql/{instance_connection_name}'
 )
 
+print("Using Cloud SQL socket:", f'/cloudsql/{instance_connection_name}')
+
+
 # conn = mysql.connector.connect(
 #     host="34.100.186.129",
 #     user="venkat",
