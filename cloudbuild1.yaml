@@ -1,0 +1,31 @@
+steps:
+  - name: 'docker'
+    args: ['build', '-t', 'venkatrobin/food-app:v1', '.']
+
+  - name: 'docker'
+    entrypoint: 'sh'
+    args:
+      - '-c'
+      - |
+        echo "$$DOCKER_PASSWORD" | docker login -u venkatrobin --password-stdin
+        docker push venkatrobin/food-app:v1
+
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: 'gcloud'
+    args:
+      - 'run'
+      - 'deploy'
+      - 'food-site-service'
+      - '--image=venkatrobin/food-app:v1'
+      - '--platform=managed'
+      - '--region=us-central1'
+      - '--port=5000'
+      - '--allow-unauthenticated'
+
+availableSecrets:
+  secretManager:
+    - versionName: projects/peaceful-choir-427805/secrets/docker-hub-pwd/versions/latest
+      env: 'DOCKER_PASSWORD'
+
+options:
+  logging: CLOUD_LOGGING_ONLY
