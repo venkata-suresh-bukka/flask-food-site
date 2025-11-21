@@ -29,12 +29,12 @@ conn = mysql.connector.connect(
 print("Using Cloud SQL socket:", f'/cloudsql/{instance_connection_name}')
 
 
-# conn = mysql.connector.connect(
-#     host=""",
-#     user="venkat",
-#     password="Venkat",
-#     database="food-site"
-# )
+conn = mysql.connector.connect(
+    host="",
+    user="venkat",
+    password="Venkat",
+    database="food-site"
+)
 print("Connected to MySQL database successfully")
 
 
